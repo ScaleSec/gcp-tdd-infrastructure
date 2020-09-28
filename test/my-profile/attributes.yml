@@ -1,0 +1,3 @@
+gcp_project_id: 'scalesec-dev'
+gcp_zone: 'us-west1-a'
+gcp_instance_name: 'scalesec-test'
