@@ -1,3 +1,10 @@
+terraform {
+  backend "gcs" {
+    bucket = "scalesec-terraform-state"
+    prefix = "lnl"
+  }
+}
+
 provider "google" {
   project     = "scalesec-dev"
   region      = "us-west1"
@@ -18,4 +25,8 @@ resource "google_compute_instance" "scalesec" {
       // External IP address is default
     }
   }
+}
+
+resource "google_storage_bucket" "state" {
+  name = "scalesec-terraform-state"
 }
