@@ -57,7 +57,7 @@ module firewall-module {
   name = "allow_ssh"
   network = "default"
   protocol = "tcp"
-  ports = ["ssh"]
-  source_ranges = ["0.0.0.0/0"]
+  ports = "ssh"
+  source_ranges = "0.0.0.0/0"
   target_tags = [""]
 }
