@@ -51,3 +51,5 @@ resource "google_compute_instance" "scalesec" {
     scopes = ["cloud-platform"]
   }
 }
+
+
