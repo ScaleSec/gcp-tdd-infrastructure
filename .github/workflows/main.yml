@@ -85,22 +85,22 @@ jobs:
           GOOGLE_OAUTH_ACCESS_TOKEN: ${{ secrets.GOOGLE_OAUTH_ACCESS_TOKEN }}
 
   # Test Job
-  test:
-    runs-on: ubuntu-latest
+  #test:
+  #  runs-on: ubuntu-latest
 
     # Use InSpec Container
-    container: chef/inspec
+  #  container: chef/inspec
 
     # Setup environment
-    env:
-      GOOGLE_OAUTH_ACCESS_TOKEN: ${{ secrets.GOOGLE_OAUTH_ACCESS_TOKEN }}
-      CHEF_LICENSE: accept-silent # silently accept the Chef InSpec license
+  #  env:
+  #    GOOGLE_OAUTH_ACCESS_TOKEN: ${{ secrets.GOOGLE_OAUTH_ACCESS_TOKEN }}
+  #    CHEF_LICENSE: accept-silent # silently accept the Chef InSpec license
 
-    steps:
-      - uses: actions/checkout@v2
+  #  steps:
+  #    - uses: actions/checkout@v2
 
-      - name: "Check for Chef Inspec"
-        run: which inspec
+   #   - name: "Check for Chef Inspec"
+   #     run: which inspec
 
-      - name: "Run Infrastructure Tests"
-        run: inspec exec test/my-profile --input-file test/my-profile/attributes.yml --reporter=cli html:./report.html --show-progress -t gcp://
+   #   - name: "Run Infrastructure Tests"
+   #     run: inspec exec test/my-profile --input-file test/my-profile/attributes.yml --reporter=cli html:./report.html --show-progress -t gcp://
