@@ -52,12 +52,15 @@ resource "google_compute_instance" "scalesec" {
   }
 }
 
-module firewall-module {
-  source = "GMafra/firewall-rules/gcp"
-  name = "allow_ssh"
+resource "google_compute_firewall" "ssh" {
+  name    = "allow-ssh"
   network = "default"
-  protocol = "tcp"
-  ports = "ssh"
-  source_ranges = "0.0.0.0/0"
-  target_tags = [""]
+
+  allow {
+    protocol = "tcp"
+    ports    = ["22"]
+  }
+
+  source_ranges = ["0.0.0.0/0"]
 }
+
