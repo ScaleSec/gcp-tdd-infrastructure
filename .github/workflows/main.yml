@@ -99,7 +99,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: "Check for Chef Inspec"
-          run: which inspec
+        run: which inspec
 
       - name: "Run Infrastructure Tests"
-          run: inspec exec test/my-profile --input-file test/my-profile/attributes.yml --reporter=cli html:./report.html --show-progress -t gcp://
+        run: inspec exec test/my-profile --input-file test/my-profile/attributes.yml --reporter=cli html:./report.html --show-progress -t gcp://
