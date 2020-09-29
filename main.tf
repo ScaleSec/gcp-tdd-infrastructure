@@ -24,6 +24,7 @@ resource "google_compute_instance" "scalesec" {
   name         = "scalesec-test"
   machine_type = "n1-standard-1"
   zone         = "us-west1-a"
+  project      = var.project_id
 
   // For quick service account updates. Otherwise the instance will be terminated/rebuilt
   allow_stopping_for_update = true
