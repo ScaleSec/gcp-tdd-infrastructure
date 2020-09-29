@@ -77,7 +77,7 @@ jobs:
             })
 
       - name: "Terraform Apply to Testing Environment"
-        id: apply
+        id: apply-testing
         if: github.event_name == 'pull_request'
         run: terraform apply -auto-approve -var-file="dev.tfvars"
         continue-on-error: false
