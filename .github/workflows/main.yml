@@ -102,7 +102,7 @@ jobs:
       - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
         with:
           version: '290.0.1'
-          project_id: scalesec-dev
+          project_id: tdd-testing-environment
           service_account_key: ${{ secrets.INSPEC_GCP_SA_KEY }}
           export_default_credentials: true
 
