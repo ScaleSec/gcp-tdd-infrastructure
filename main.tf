@@ -49,7 +49,7 @@ module "instance_service_account" {
   source        = "terraform-google-modules/service-accounts/google"
   version       = "~> 3.0"
   project_id    = var.project_id
-  names         = ["test-instance-sa"]
+  names         = ["custom-instance-sa"]
   display_name  = "Test Instance Service Account"
   description   = "The Service Account used by Our Test Instance"
   project_roles = ["${var.project_id}=>roles/secretmanager.secretAccessor"]
