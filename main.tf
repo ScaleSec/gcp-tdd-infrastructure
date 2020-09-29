@@ -41,10 +41,6 @@ resource "google_compute_instance" "scalesec" {
   }
 }
 
-resource "google_storage_bucket" "state" {
-  name = "scalesec-terraform-state"
-}
-
 module "instance_service_account" {
   source        = "terraform-google-modules/service-accounts/google"
   version       = "~> 3.0"
