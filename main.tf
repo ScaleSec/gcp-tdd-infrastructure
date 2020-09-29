@@ -6,7 +6,7 @@ terraform {
 }
 
 provider "google" {
-  project     = "scalesec-dev"
+  project     = var.project_id
   region      = "us-west1"
 }
 
