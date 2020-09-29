@@ -94,7 +94,6 @@ jobs:
 
     steps:
       # setup python
-
       - uses: actions/checkout@v2
 
       # pull credentials
@@ -105,10 +104,11 @@ jobs:
           service_account_key: ${{ secrets.INSPEC_GCP_SA_KEY }}
           export_default_credentials: true
 
+      - name: "Install Chef Inspec"
+        run: curl https://omnitruck.chef.io/install.sh | sudo bash -s -- -P inspec
+
       - name: "Check for Chef Inspec"
-        container: chef/inspec
         run: which inspec
 
       - name: "Run Infrastructure Tests"
-        container: chef/inspec
         run: inspec exec test/my-profile --input-file test/my-profile/attributes.yml --reporter=cli html:./report.html --show-progress -t gcp://
