@@ -32,3 +32,16 @@ control "proper-tagging" do
     it { should match '^(public|sensitive|secret|top_secret)$' }
   end
 end
+
+# Ensure firewalls don't have SSH or RDP ports open
+control 'no-open-firewalls' do
+  impact 1.0
+  title 'Ensure no SSH or RDP admin ports open in firewall rules'
+  google_compute_firewalls(project: gcp_project_id).firewall_names.each do |firewall_name|
+    describe google_compute_firewall(project: gcp_project_id, name: firewall_name) do
+      it { should exist }
+      its('allowed_ssh?')  { should be false }
+      its('allowed_rdp?')  { should be false }
+    end
+  end
+end
