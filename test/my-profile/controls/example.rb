@@ -1,8 +1,11 @@
 title "ScaleSec Lunch n Learn"
+
+# Perform some Setup
 gcp_project_id = attribute("gcp_project_id")
 gcp_zone = attribute("gcp_zone")
 gcp_instance_name = attribute("gcp_instance_name")
 
+# Ensure instance doesn't use the default service account
 control "no-default-service-account" do
   impact 1.0
   title "Instance does not use the default service account"
@@ -12,6 +15,7 @@ control "no-default-service-account" do
   end
 end
 
+# Ensure resources have proper tagging
 control "proper-tagging" do
   impact 1.0
   title "Proper Tagging for Compute Resources"
