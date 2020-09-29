@@ -79,12 +79,12 @@ jobs:
       - name: "Terraform Apply to Testing Environment"
         id: apply-testing
         if: github.event_name == 'pull_request'
-        run: terraform apply -auto-approve
+        run: terraform apply -auto-approve -var="project_id=tdd-testing-environment"
         continue-on-error: false
         env:
           GOOGLE_OAUTH_ACCESS_TOKEN: ${{ secrets.GOOGLE_OAUTH_ACCESS_TOKEN }}
 
-      - name: "Terraform Apply"
+      - name: "Terraform Apply to Dev Environment"
         id: apply
         if: github.ref == 'refs/heads/master' && github.event_name == 'push'
         run: terraform apply -auto-approve -var-file="dev.tfvars"
