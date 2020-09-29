@@ -95,7 +95,7 @@ jobs:
   # Test Job
   test:
     needs: build
-
+    if: github.ref != 'refs/heads/master'
     runs-on: ubuntu-latest
 
     # Setup environment
