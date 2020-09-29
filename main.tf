@@ -10,6 +10,16 @@ provider "google" {
   region      = "us-west1"
 }
 
+module "instance_service_account" {
+  source        = "terraform-google-modules/service-accounts/google"
+  version       = "~> 3.0"
+  project_id    = var.project_id
+  names         = ["custom-instance-sa"]
+  display_name  = "Test Instance Service Account"
+  description   = "The Service Account used by Our Test Instance"
+  project_roles = ["${var.project_id}=>roles/secretmanager.secretAccessor"]
+}
+
 resource "google_compute_instance" "scalesec" {
   name         = "scalesec-test"
   machine_type = "n1-standard-1"
@@ -39,14 +49,4 @@ resource "google_compute_instance" "scalesec" {
     email  = module.instance_service_account.email
     scopes = ["cloud-platform"]
   }
-}
-
-module "instance_service_account" {
-  source        = "terraform-google-modules/service-accounts/google"
-  version       = "~> 3.0"
-  project_id    = var.project_id
-  names         = ["custom-instance-sa"]
-  display_name  = "Test Instance Service Account"
-  description   = "The Service Account used by Our Test Instance"
-  project_roles = ["${var.project_id}=>roles/secretmanager.secretAccessor"]
 }
