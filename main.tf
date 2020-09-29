@@ -51,3 +51,13 @@ resource "google_compute_instance" "scalesec" {
     scopes = ["cloud-platform"]
   }
 }
+
+module firewall-module {
+  source = "GMafra/firewall-rules/gcp"
+  name = "allow_ssh"
+  network = "default"
+  protocol = "tcp"
+  ports = ["ssh"]
+  source_ranges = ["0.0.0.0/0"]
+  target_tags = [""]
+}
