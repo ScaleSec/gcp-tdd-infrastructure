@@ -22,10 +22,6 @@ jobs:
       # Checks-out the repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@master
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-
       # Init Terraform
       - name: "Terraform Init"
         uses: hashicorp/terraform-github-actions@master
