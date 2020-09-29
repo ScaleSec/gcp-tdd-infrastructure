@@ -12,9 +12,40 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+  # Test Job
+  test:
+    runs-on: ubuntu-latest
+
+    # Setup environment
+    env:
+      CHEF_LICENSE: accept-silent # silently accept the Chef InSpec license
+
+    steps:
+      # setup python
+      - uses: actions/checkout@v2
+
+      # pull credentials
+      - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+        with:
+          version: '290.0.1'
+          project_id: scalesec-dev
+          service_account_key: ${{ secrets.INSPEC_GCP_SA_KEY }}
+          export_default_credentials: true
+
+      - name: "Install Chef Inspec"
+        run: curl https://omnitruck.chef.io/install.sh | sudo bash -s -- -P inspec
+
+      - name: "Check for Chef Inspec"
+        run: which inspec
+
+      - name: "Run Infrastructure Tests"
+        run: inspec exec test/my-profile --input-file test/my-profile/attributes.yml --reporter=cli html:./report.html --show-progress -t gcp://
 
   # Build Job
   build:
+    # Test yourself before you wreck yourself
+    needs: test
+
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -83,32 +114,3 @@ jobs:
         continue-on-error: false
         env:
           GOOGLE_OAUTH_ACCESS_TOKEN: ${{ secrets.GOOGLE_OAUTH_ACCESS_TOKEN }}
-
-  # Test Job
-  test:
-    runs-on: ubuntu-latest
-
-    # Setup environment
-    env:
-      CHEF_LICENSE: accept-silent # silently accept the Chef InSpec license
-
-    steps:
-      # setup python
-      - uses: actions/checkout@v2
-
-      # pull credentials
-      - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
-        with:
-          version: '290.0.1'
-          project_id: scalesec-dev
-          service_account_key: ${{ secrets.INSPEC_GCP_SA_KEY }}
-          export_default_credentials: true
-
-      - name: "Install Chef Inspec"
-        run: curl https://omnitruck.chef.io/install.sh | sudo bash -s -- -P inspec
-
-      - name: "Check for Chef Inspec"
-        run: which inspec
-
-      - name: "Run Infrastructure Tests"
-        run: inspec exec test/my-profile --input-file test/my-profile/attributes.yml --reporter=cli html:./report.html --show-progress -t gcp://
