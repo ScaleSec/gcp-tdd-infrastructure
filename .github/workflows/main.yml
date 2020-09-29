@@ -86,6 +86,7 @@ jobs:
 
   # Test Job
   test:
+    runs-on: ubuntu-latest
 
     # Use InSpec Container
     container: chef/inspec
