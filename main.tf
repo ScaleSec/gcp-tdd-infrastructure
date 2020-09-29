@@ -26,11 +26,7 @@ resource "google_compute_instance" "scalesec" {
 
   network_interface {
     network = "default"
-    access_config {
-      // External IP address is default
-      // commenting the below will fail the test
-      nat_ip = google_compute_address.static.address
-    }
+    access_config { }
   }
 
   labels = {
@@ -43,10 +39,6 @@ resource "google_compute_instance" "scalesec" {
     email  = module.instance_service_account.email
     scopes = ["cloud-platform"]
   }
-}
-
-resource "google_compute_address" "static" {
-  name = "ipv4-address"
 }
 
 resource "google_storage_bucket" "state" {
