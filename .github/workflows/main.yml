@@ -38,6 +38,8 @@ jobs:
       # Apply Terraform
       - name: "Terraform Apply"
         uses: hashicorp/terraform-github-actions@master
+        env:
+          GOOGLE_OAUTH_ACCESS_TOKEN: ${{ secrets.GOOGLE_OAUTH_ACCESS_TOKEN }}
         with:
           tf_actions_version: 0.12.13
           tf_actions_subcommand: "apply"
