@@ -82,3 +82,23 @@ jobs:
         continue-on-error: false
         env:
           GOOGLE_OAUTH_ACCESS_TOKEN: ${{ secrets.GOOGLE_OAUTH_ACCESS_TOKEN }}
+
+  # Test Job
+  test:
+
+    # Use InSpec Container
+    container: chef/inspec
+
+    # Setup environment
+    env:
+      GOOGLE_OAUTH_ACCESS_TOKEN: ${{ secrets.GOOGLE_OAUTH_ACCESS_TOKEN }}
+      GOOGLE_AUTH_SUPPRESS_CREDENTIALS_WARNINGS: true # necessary to suppress warnings about Google Cloud SDK
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: "Check for Chef Inspec"
+          run: which inspec
+
+      - name: "Run Infrastructure Tests"
+          run: inspec exec test/my-profile --input-file test/my-profile/attributes.yml --reporter=cli html:./report.html --show-progress -t gcp://
