@@ -88,19 +88,12 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-    # Use InSpec Container
-    container: chef/inspec
-
     # Setup environment
     env:
       CHEF_LICENSE: accept-silent # silently accept the Chef InSpec license
 
     steps:
       # setup python
-      - uses: actions/setup-python@v2
-
-      - name: Display Python version
-        run: python -c "import sys; print(sys.version)"
 
       - uses: actions/checkout@v2
 
@@ -113,7 +106,9 @@ jobs:
           export_default_credentials: true
 
       - name: "Check for Chef Inspec"
+        container: chef/inspec
         run: which inspec
 
       - name: "Run Infrastructure Tests"
+        container: chef/inspec
         run: inspec exec test/my-profile --input-file test/my-profile/attributes.yml --reporter=cli html:./report.html --show-progress -t gcp://
